@@ -1,22 +1,15 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TextModified extends StatelessWidget {
-  final String text;
-  final Color color;
-  final double size;
+class modified_text extends StatelessWidget {
+  final String? text;
+  final Color? color;
+  final double? size;
 
-  const TextModified(
-      {super.key, required this.text, required this.color, required this.size});
+  const modified_text({super.key, this.text, this.color, this.size});
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: GoogleFonts.breeSerif(
-        color: color,
-        fontSize: size,
-      ),
-    );
+    return Text(text!, style: GoogleFonts.roboto(color: color, fontSize: size));
   }
 }

@@ -1,53 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:movie_apps/utils/text_modified.dart';
+import 'package:movie_apps/widgets/toprated.dart';
+import 'package:movie_apps/widgets/trending_movies.dart';
+import 'package:movie_apps/widgets/tv.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List trendingMovies = [];
-  List topMovies = [];
+  final String apikey = '67af5e631dcbb4d0981b06996fcd47bc';
+  final String readaccesstoken =
+      'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2N2FmNWU2MzFkY2JiNGQwOTgxYjA2OTk2ZmNkNDdiYyIsInN1YiI6IjYwNzQ1OTA0ZjkyNTMyMDAyOTFmZDczYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.C_Bkz_T8OybTGo3HfYsESNjN46LBYdw3LHdF-1TzYYs';
+  List trendingmovies = [];
+  List topratedmovies = [];
   List tv = [];
-  final String apiKey = '808d181f4ea96902bfb2168fa14a6335';
-  final readAccessToken =
-      'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MDhkMTgxZjRlYTk2OTAyYmZiMjE2OGZhMTRhNjMzNSIsIm5iZiI6MTczMjQxNjM1Ny4wMzc3NjQ1LCJzdWIiOiI2NzQyOGQwZGFhYjcyMmJmYTdjOTAyOTIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.rcTbm5DP3vfgNn_I0zTTEIyQoMlKMylVQBl3DueRRSo';
 
   @override
   void initState() {
     super.initState();
-    loadMovie();
+    loadmovies();
   }
 
-  loadMovie() async {
-    TMDB tmdbWithCustomLogs = TMDB(ApiKeys(apiKey, readAccessToken),
-        logConfig: const ConfigLogger(showErrorLogs: true, showLogs: true));
-    Map trendingResult = await tmdbWithCustomLogs.v3.trending.getTrending();
-    Map topMoviesResult = await tmdbWithCustomLogs.v3.movies.getTopRated();
-    Map tvMovieResult = await tmdbWithCustomLogs.v3.tv.getPopular();
+  loadmovies() async {
+    TMDB tmdbWithCustomLogs = TMDB(
+      ApiKeys(apikey, readaccesstoken),
+      logConfig: const ConfigLogger(
+        showLogs: true,
+        showErrorLogs: true,
+      ),
+    );
+
+    Map trendingresult = await tmdbWithCustomLogs.v3.trending.getTrending();
+    Map topratedresult = await tmdbWithCustomLogs.v3.movies.getTopRated();
+    Map tvresult = await tmdbWithCustomLogs.v3.tv.getPouplar();
+    print((trendingresult));
     setState(() {
-      trendingMovies = trendingResult['result'];
-      topMovies = topMoviesResult['result'];
-      tv = tvMovieResult['result'];
+      trendingmovies = trendingresult['results'];
+      topratedmovies = topratedresult['results'];
+      tv = tvresult['results'];
     });
-    print(trendingMovies);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-        title: const Text(
-          "Movie App",
-          style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          title: const modified_text(text: 'Flutter Movie App ❤️'),
+          backgroundColor: Colors.transparent,
         ),
-      ),
-    );
+        body: ListView(
+          children: [
+            TV(tv: tv),
+            TrendingMovies(
+              trending: trendingmovies,
+            ),
+            TopRatedMovies(
+              toprated: topratedmovies,
+            ),
+          ],
+        ));
   }
 }
