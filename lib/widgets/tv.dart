@@ -9,16 +9,16 @@ class TV extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          modified_text(
+          const modified_text(
             text: 'Popular TV Shows',
             size: 26,
           ),
           const SizedBox(height: 10),
-          Container(
+          SizedBox(
               // color: Colors.red,
               height: 200,
               child: ListView.builder(
@@ -26,7 +26,7 @@ class TV extends StatelessWidget {
                   itemCount: tv.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       // color: Colors.green,
                       width: 250,
                       child: Column(
@@ -42,14 +42,10 @@ class TV extends StatelessWidget {
                             ),
                             height: 140,
                           ),
-                          SizedBox(height: 5),
-                          Container(
-                            child: modified_text(
-                                size: 15,
-                                text: tv[index]['original_name'] != null
-                                    ? tv[index]['original_name']
-                                    : 'Loading'),
-                          )
+                          const SizedBox(height: 5),
+                          modified_text(
+                              size: 15,
+                              text: tv[index]['original_name'] ?? 'Loading')
                         ],
                       ),
                     );

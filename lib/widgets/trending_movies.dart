@@ -47,7 +47,7 @@ class TrendingMovies extends StatelessWidget {
                                   ['release_date'],
                                 )));
                       },
-                      child: Container(
+                      child: SizedBox(
                         width: 140,
                         child: Column(
                           children: [
@@ -62,14 +62,10 @@ class TrendingMovies extends StatelessWidget {
                               ),
                               height: 200,
                             ),
-                            SizedBox(height: 5),
-                            Container(
-                              child: modified_text(
-                                  size: 15,
-                                  text: trending[index]['title'] != null
-                                      ? trending[index]['title']
-                                      : 'Loading'),
-                            )
+                            const SizedBox(height: 5),
+                            modified_text(
+                                size: 15,
+                                text: trending[index]['title'] ?? 'Loading')
                           ],
                         ),
                       ),

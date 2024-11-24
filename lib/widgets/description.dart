@@ -17,50 +17,48 @@ class Description extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(
-        child: ListView(children: [
-          Container(
-              height: 250,
-              child: Stack(children: [
-                Positioned(
-                  child: Container(
-                    height: 250,
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.network(
-                      bannerurl,
-                      fit: BoxFit.cover,
-                    ),
+      body: ListView(children: [
+        SizedBox(
+            height: 250,
+            child: Stack(children: [
+              Positioned(
+                child: SizedBox(
+                  height: 250,
+                  width: MediaQuery.of(context).size.width,
+                  child: Image.network(
+                    bannerurl,
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Positioned(
-                    bottom: 10,
-                    child: modified_text(text: '⭐ Average Rating - ' + vote)),
-              ])),
-          const SizedBox(height: 15),
-          Container(
-              padding: EdgeInsets.all(10),
-              child: modified_text(
-                  text: name ?? 'Not Loaded', size: 24)),
-          Container(
-              padding: EdgeInsets.only(left: 10),
-              child:
-                  modified_text(text: 'Releasing On - $launch_on', size: 14)),
-          Row(
-            children: [
-              Container(
-                height: 200,
-                width: 100,
-                child: Image.network(posterurl!),
               ),
-              Flexible(
-                child: Container(
-                    padding: EdgeInsets.all(10),
-                    child: modified_text(text: description, size: 18)),
-              ),
-            ],
-          )
-        ]),
-      ),
+              Positioned(
+                  bottom: 10,
+                  child: modified_text(text: '⭐ Average Rating - $vote')),
+            ])),
+        const SizedBox(height: 15),
+        Container(
+            padding: const EdgeInsets.all(10),
+            child: modified_text(
+                text: name ?? 'Not Loaded', size: 24)),
+        Container(
+            padding: const EdgeInsets.only(left: 10),
+            child:
+                modified_text(text: 'Releasing On - $launch_on', size: 14)),
+        Row(
+          children: [
+            SizedBox(
+              height: 200,
+              width: 100,
+              child: Image.network(posterurl),
+            ),
+            Flexible(
+              child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: modified_text(text: description, size: 18)),
+            ),
+          ],
+        )
+      ]),
     );
   }
 }

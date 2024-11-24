@@ -14,35 +14,35 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final String apikey = '67af5e631dcbb4d0981b06996fcd47bc';
-  final String readaccesstoken =
+  final String readAccessToken =
       'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2N2FmNWU2MzFkY2JiNGQwOTgxYjA2OTk2ZmNkNDdiYyIsInN1YiI6IjYwNzQ1OTA0ZjkyNTMyMDAyOTFmZDczYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.C_Bkz_T8OybTGo3HfYsESNjN46LBYdw3LHdF-1TzYYs';
-  List trendingmovies = [];
-  List topratedmovies = [];
+  List trendingMovies = [];
+  List topRatedMovies = [];
   List tv = [];
 
   @override
   void initState() {
     super.initState();
-    loadmovies();
+    loadMovies();
   }
 
-  loadmovies() async {
+  loadMovies() async {
     TMDB tmdbWithCustomLogs = TMDB(
-      ApiKeys(apikey, readaccesstoken),
+      ApiKeys(apikey, readAccessToken),
       logConfig: const ConfigLogger(
         showLogs: true,
         showErrorLogs: true,
       ),
     );
 
-    Map trendingresult = await tmdbWithCustomLogs.v3.trending.getTrending();
-    Map topratedresult = await tmdbWithCustomLogs.v3.movies.getTopRated();
-    Map tvresult = await tmdbWithCustomLogs.v3.tv.getPouplar();
-    print((trendingresult));
+    Map trendingResult = await tmdbWithCustomLogs.v3.trending.getTrending();
+    Map topRatedResult = await tmdbWithCustomLogs.v3.movies.getTopRated();
+    Map tvResult = await tmdbWithCustomLogs.v3.tv.getPouplar();
+    print((trendingResult));
     setState(() {
-      trendingmovies = trendingresult['results'];
-      topratedmovies = topratedresult['results'];
-      tv = tvresult['results'];
+      trendingMovies = trendingResult['results'];
+      topRatedMovies = topRatedResult['results'];
+      tv = tvResult['results'];
     });
   }
 
@@ -51,17 +51,18 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: const modified_text(text: 'Flutter Movie App ❤️'),
+          centerTitle: true,
+          title: const modified_text(text: 'Movie App ❤️'),
           backgroundColor: Colors.transparent,
         ),
         body: ListView(
           children: [
             TV(tv: tv),
             TrendingMovies(
-              trending: trendingmovies,
+              trending: trendingMovies,
             ),
             TopRatedMovies(
-              toprated: topratedmovies,
+              topRated: topRatedMovies,
             ),
           ],
         ));
